@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "agenda"
+name = "ContactBook"
 version = "0.1.0"
 description = ""
 authors = ["Gamaliel Garcia <46827955+EGAMAGZ@users.noreply.github.com>"]
@@ -9,9 +9,14 @@ readme = "README.md"
 python = "^3.11"
 flet = "^0.4.0"
 tinydb = "^4.7.1"
-ruff = "^0.0.246"
 
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.0.246"
+black = "^23.1.0"
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.ruff]
+select = ["E", "W", "F", "PL", "N", "A"]
