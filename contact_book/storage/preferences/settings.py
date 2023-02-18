@@ -1,5 +1,7 @@
 from typing import overload
+
 from flet import Page, ThemeMode
+
 
 class Settings:
     page: Page

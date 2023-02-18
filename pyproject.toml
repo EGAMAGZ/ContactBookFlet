@@ -19,4 +19,15 @@ requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.ruff]
-select = ["E", "W", "F", "PL", "N", "A"]
+select = [
+    "E", # pycodestyle (Errors)
+    "W", # pycodestyle (Warnings)
+    "F", # Pyflakes
+    "PL", # pylint
+    "N", # pep8-naming
+    "A", # flake8-builtins
+    "B", # flake8-bugbear
+    "I", # isort,
+]
+
+fixable = ["E", "A", "F", "W", "I"]
