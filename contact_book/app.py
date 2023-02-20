@@ -4,10 +4,12 @@ from flet import (
     RouteChangeEvent,
     TemplateRoute,
     ThemeMode,
+    ViewPopEvent,
     app,
 )
 
 from contact_book.screens.contact_list.view import ContactListView
+from contact_book.screens.new_contact.view import NewContactView
 from contact_book.storage.settings import Settings
 from contact_book.theme import THEME_DARK, THEME_LIGHT
 
@@ -27,22 +29,28 @@ class ContactBookApp:
         self.page.theme_mode = self.settings.get_theme_mode()
         self.page.on_keyboard_event = self.on_keyboard_event
         self.page.on_route_change = self.on_route_change
+        self.page.on_view_pop = self.on_view_pop
 
         self.page.go("/")
         self.page.update()
 
     def on_route_change(self, event: RouteChangeEvent) -> None:
         self.page.views.clear()
-        troute = TemplateRoute(self.page.route) # noqa: F841
-        if troute.match('/'):
+        troute = TemplateRoute(self.page.route)
+        # if troute.match('/'):
+        self.page.views.append(
+            ContactListView(self.page)
+        )
+        if troute.match('/new-contact'):
             self.page.views.append(
-                ContactListView(self.page)
+                NewContactView(self.page)
             )
         self.page.update()
 
-    def on_view_pop(self, view) -> None:
-        print(type(view))
-        pass
+    def on_view_pop(self, event: ViewPopEvent) -> None:
+        self.page.views.pop()
+        top_view = self.page.views[-1]
+        self.page.go(top_view.route)
 
     def on_keyboard_event(self, event: KeyboardEvent) -> None:
         if event.control and event.shift and event.key == "S":

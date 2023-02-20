@@ -81,14 +81,15 @@ class ContactListScreen(UserControl):
             )
 
     def on_click_new_contact(self, event: ContainerTapEvent) -> None:
-        self.contacts_table.add_contact(
-            Contact(
-                first_name="George",
-                last_name="Washington",
-                phone_number="555-555-5555",
-                email="george@washington.com",
-            )
-        )
+        self.page.go("/new-contact")
+        # self.contacts_table.add_contact(
+        #     Contact(
+        #         first_name="George",
+        #         last_name="Washington",
+        #         phone_number="555-555-5555",
+        #         email="george@washington.com",
+        #     )
+        # )
 
     def build(self):
         return Column(
