@@ -160,3 +160,5 @@ cython_debug/
 #.idea/
 
 .vscode/
+.vscode/settings.json
+contact_book_db.json

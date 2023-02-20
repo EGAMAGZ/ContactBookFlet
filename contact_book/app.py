@@ -8,7 +8,7 @@ from flet import (
 )
 
 from contact_book.screens.contact_list.view import ContactListView
-from contact_book.storage.preferences.settings import Settings
+from contact_book.storage.settings import Settings
 from contact_book.theme import THEME_DARK, THEME_LIGHT
 
 
@@ -36,9 +36,8 @@ class ContactBookApp:
         troute = TemplateRoute(self.page.route) # noqa: F841
         if troute.match('/'):
             self.page.views.append(
-                ContactListView()
+                ContactListView(self.page)
             )
-
         self.page.update()
 
     def on_view_pop(self, view) -> None:

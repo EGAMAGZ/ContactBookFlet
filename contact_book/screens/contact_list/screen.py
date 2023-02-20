@@ -1,22 +1,95 @@
 from flet import (
+    ButtonStyle,
+    CircleAvatar,
     Column,
     Container,
+    ContainerTapEvent,
+    CrossAxisAlignment,
     IconButton,
+    InputBorder,
+    ListTile,
+    ListView,
     MainAxisAlignment,
+    Page,
     Row,
+    Stack,
     Text,
     TextField,
     TextThemeStyle,
     UserControl,
+    alignment,
     border_radius,
     colors,
     icons,
     padding,
-    InputBorder,
 )
+
+from contact_book.model.contact import Contact
+from contact_book.storage.database import db
+from contact_book.storage.database.contacts_table import ContactsTable
 
 
 class ContactListScreen(UserControl):
+    contacts_table: ContactsTable
+    contact_list: list[Contact]
+
+    def __init__(self, page: Page) -> None:
+        super().__init__()
+        self.expand = True
+        self.contacts_table = ContactsTable(db)
+        self.contact_list = self.contacts_table.get_all()
+
+    def contact_list_view(self) -> ListView | Stack:
+        if len(self.contact_list) > 0:
+            return ListView(
+                expand=1,
+                controls=[
+                    ListTile(
+                        leading=CircleAvatar(content=Text(contact.first_name[0])),
+                        title=Text(contact.first_name),
+                    )
+                    for contact in self.contact_list
+                ],
+            )
+        else:
+            return Stack(
+                expand=1,
+                controls=[
+                    Container(
+                        Column(
+                            tight=True,
+                            controls=[
+                                IconButton(
+                                    icon=icons.PERSON_ADD,
+                                    icon_size=48,
+                                    bgcolor=colors.PRIMARY,
+                                    icon_color=colors.ON_PRIMARY,
+                                    on_click=self.on_click_new_contact,
+                                ),
+                                Text(
+                                    value=(
+                                        "No contacts yet. Click to add a new contact."
+                                    ),
+                                    style=TextThemeStyle.HEADLINE_SMALL,
+                                ),
+                            ],
+                            horizontal_alignment=CrossAxisAlignment.CENTER,
+                        ),
+                        alignment=alignment.center,
+                    )
+                ],
+            )
+
+    def on_click_new_contact(self, event: ContainerTapEvent) -> None:
+        self.contacts_table.add_contact(
+            Contact(
+                first_name="George",
+                last_name="Washington",
+                phone_number="555-555-5555",
+                email="george@washington.com",
+            )
+        )
+
     def build(self):
         return Column(
             controls=[
@@ -58,5 +131,6 @@ class ContactListScreen(UserControl):
                     prefix_icon=icons.SEARCH,
                     multiline=False,
                 ),
+                self.contact_list_view(),
             ]
         )
