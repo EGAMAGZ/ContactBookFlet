@@ -1,3 +1,5 @@
+from typing import List
+
 from tinydb import TinyDB
 from tinydb.table import Document
 
@@ -19,7 +21,7 @@ class ContactsTable:
             email=document["email"],
         )
 
-    def get_all(self) -> list[Contact]:
+    def get_all(self) -> List[Contact]:
         contacts = self.contacts_table.all()
         return list(map(self.__to_contact, contacts))
 

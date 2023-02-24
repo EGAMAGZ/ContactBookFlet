@@ -6,6 +6,7 @@ from flet import (
     ThemeMode,
     ViewPopEvent,
     app,
+    WEB_BROWSER
 )
 
 from contact_book.screens.contact_list.view import ContactListView
@@ -80,4 +81,5 @@ def run_app() -> None:
     app(
         name="Contact book",
         target=main,
+        view=WEB_BROWSER,
     )

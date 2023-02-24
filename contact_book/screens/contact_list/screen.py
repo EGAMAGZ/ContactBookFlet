@@ -1,5 +1,6 @@
+from typing import List, Union
+
 from flet import (
-    ButtonStyle,
     CircleAvatar,
     Column,
     Container,
@@ -31,7 +32,7 @@ from contact_book.storage.database.contacts_table import ContactsTable
 
 class ContactListScreen(UserControl):
     contacts_table: ContactsTable
-    contact_list: list[Contact]
+    contact_list: List[Contact]
 
     def __init__(self, page: Page) -> None:
         super().__init__()
@@ -39,7 +40,7 @@ class ContactListScreen(UserControl):
         self.contacts_table = ContactsTable(db)
         self.contact_list = self.contacts_table.get_all()
 
-    def contact_list_view(self) -> ListView | Stack:
+    def contact_list_view(self) -> Union[ListView, Stack]:
         if len(self.contact_list) > 0:
             return ListView(
                 expand=1,
@@ -82,14 +83,6 @@ class ContactListScreen(UserControl):
 
     def on_click_new_contact(self, event: ContainerTapEvent) -> None:
         self.page.go("/new-contact")
-        # self.contacts_table.add_contact(
-        #     Contact(
-        #         first_name="George",
-        #         last_name="Washington",
-        #         phone_number="555-555-5555",
-        #         email="george@washington.com",
-        #     )
-        # )
 
     def build(self):
         return Column(
