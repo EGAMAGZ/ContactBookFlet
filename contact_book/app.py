@@ -6,7 +6,6 @@ from flet import (
     ThemeMode,
     ViewPopEvent,
     app,
-    WEB_BROWSER
 )
 
 from contact_book.screens.contact_list.view import ContactListView
@@ -55,10 +54,16 @@ class ContactBookApp:
 
     def on_keyboard_event(self, event: KeyboardEvent) -> None:
         if event.control and event.shift and event.key == "S":
-            self.page.show_semantics_debugger = not self.page.show_semantics_debugger
-            self.page.update()
+            self.show_semantics_debugger()
         elif event.control and event.shift and event.key == "D":
             self.change_theme_mode()
+        elif event.control and event.key=="N":
+            self.page.go("/new-contact")
+
+    # Show the semantics debugger
+    def show_semantics_debugger(self) -> None:
+        self.page.show_semantics_debugger = not self.page.show_semantics_debugger
+        self.page.update()
 
     def change_theme_mode(self) -> None:
         self.settings.set_theme_mode(
@@ -81,5 +86,4 @@ def run_app() -> None:
     app(
         name="Contact book",
         target=main,
-        view=WEB_BROWSER,
     )

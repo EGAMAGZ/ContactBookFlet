@@ -1,4 +1,6 @@
-from flet import AppBar, Page, Text, View
+from flet import Page, View
+
+from contact_book.screens.new_contact.screen import NewContactScreen
 
 
 class NewContactView(View):
@@ -10,8 +12,8 @@ class NewContactView(View):
 
         self.route = "/new-contact"
         self.controls = [
-            AppBar(
-                title=Text("New Contact"),
-            ),
-            Text("New Contact"),
+            NewContactScreen(
+                page=self.page,
+                parent_view=self,
+            )
         ]

@@ -46,8 +46,14 @@ class ContactListScreen(UserControl):
                 expand=1,
                 controls=[
                     ListTile(
-                        leading=CircleAvatar(content=Text(contact.first_name[0])),
-                        title=Text(contact.first_name),
+                        leading=CircleAvatar(
+                            content=Text(
+                                value=contact.name[0] if contact.name else "?",
+                            ),
+                        ),
+                        title=Text(
+                            value=contact.name
+                        ),
                     )
                     for contact in self.contact_list
                 ],

@@ -15,9 +15,9 @@ class ContactsTable:
     def __to_contact(self, document: Document) -> Contact:
         return Contact(
             _id=document.doc_id,
-            first_name=document["first_name"],
+            name=document["first_name"],
             last_name=document["last_name"],
-            phone_number=document["phone_number"],
+            phone=document["phone_number"],
             email=document["email"],
         )
 
@@ -28,9 +28,9 @@ class ContactsTable:
     def add_contact(self, contact: Contact):
         self.contacts_table.insert(
             {
-                "first_name": contact.first_name,
+                "first_name": contact.name,
                 "last_name": contact.last_name,
-                "phone_number": contact.phone_number,
+                "phone_number": contact.phone,
                 "email": contact.email,
             }
         )

@@ -1,11 +1,11 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Optional
 
 
 @dataclass
 class Contact:
-    _id: Optional[None]
-    first_name: str
+    name: str
     last_name: str
-    phone_number: str
+    phone: str
     email: str
+    _id: Optional[None] = field(default=None)
